@@ -10,7 +10,7 @@
 
 my $sympa_root_dir = "/usr/local/sympa";
 
- Given qr/family "(\S+)" is installed/, sub {
+ Given qr/family "(\S+)" is created/, sub {
       -d "/opt/sympa-dev/data/$1" ||
          do { fail("No directory for family $1"); return };
       dircopy("/opt/sympa-dev/data/$1", $sympa_root_dir."/etc/families/$1");
@@ -23,5 +23,5 @@ my $sympa_root_dir = "/usr/local/sympa";
  
  When qr/I instantiate family "(\S+)*" with "(\S+)*"/, sub {
       `$sympa_root_dir/bin/sympa.pl --instantiate_family $1 --input_file $sympa_root_dir/etc/families/$1/$2` ||
-         do { fail("Failed to instantiate family $1 with $2"); return };
+         do { fail("Failed to instantiate family $1"); return };
  };

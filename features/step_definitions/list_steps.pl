@@ -21,7 +21,7 @@ Then qr/list "(\S+)" should have a web page/, sub {
      $mech->get( $sympa_web_url.'/info/'.$1);
      printf "Title: %s\n", $mech->title();
 
-     ok( $mech->title eq 'maliste - This is my list - info');    
+     ok( $mech->title =~ 'This is my list - info');    
 };
 
 
