@@ -19,6 +19,5 @@
     Given family "testfamily" is defined
     Given list "testlist2" has a config file
     When I close list "testlist2" from family "testfamily"
-    # comment exprimer un not sans réécrire les steps ?
     Then list "testlist2" config file should contain "status family_closed"
     
