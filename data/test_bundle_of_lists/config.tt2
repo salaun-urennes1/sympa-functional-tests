@@ -1,0 +1,8 @@
+subject [% sujet %]
+
+[% FOREACH o = owner -%]
+owner
+email [% o.email %]
+
+[% END -%]
+

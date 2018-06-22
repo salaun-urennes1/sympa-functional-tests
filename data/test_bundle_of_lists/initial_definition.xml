@@ -1,0 +1,13 @@
+ <family> 
+   <list>
+    <listname>testbasic</listname>
+    <subject>This list has a basic config</subject>
+    <owner multiple="1">
+      <email>first.owner@univ-rennes1.fr</email>
+    </owner>
+    <owner multiple="1">
+      <email>second.owner@univ-rennes1.fr</email>
+    </owner>
+   </list>
+</family>
+
