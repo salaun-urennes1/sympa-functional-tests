@@ -38,7 +38,6 @@ Then qr/list "(\S+)" config file should contain "([^"]+)"/, sub {
 Then qr/list "(\S+)" homepage title should contain "([^"]+)"/, sub {
      my $mech = WWW::Mechanize->new( ssl_opts => { verify_hostname => 0, SSL_verify_mode => IO::Socket::SSL::SSL_VERIFY_NONE } ) ;
      $mech->get( $sympa_web_url.'/info/'.$1);
-     printf "Title: %s\n", $mech->title();
 
      ok( $mech->title =~ /$2/);    
 };
