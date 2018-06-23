@@ -1,14 +1,21 @@
  <family> 
    <list>
-    <listname>testbasic</listname>
+    <listname>test_basic</listname>
     <subject>This list has a basic config</subject>
     <visibility>noconceal</visibility>
     <review>public</review>
     <owner multiple="1">
       <email>first.owner@univ-rennes1.fr</email>
     </owner>
+   </list>
+   <list>
+    <listname>test_custom_subject</listname>
+    <subject>This list does custom subject tagging</subject>
+    <visibility>noconceal</visibility>
+    <custom_subject>custom tag</custom_subject>
+    <review>public</review>
     <owner multiple="1">
-      <email>second.owner@univ-rennes1.fr</email>
+      <email>first.owner@univ-rennes1.fr</email>
     </owner>
    </list>
 </family>

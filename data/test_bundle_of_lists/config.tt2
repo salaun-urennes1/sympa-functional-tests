@@ -12,5 +12,9 @@ visibility [% visibility %]
 review [% review %]
 [% END %]
 
+[% IF custom_subject %]
+custom_subject [% custom_subject %]
+[% END %]
+
 [% END -%]
 

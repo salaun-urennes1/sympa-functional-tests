@@ -12,6 +12,7 @@ my $sympa_root_dir = "/usr/local/sympa";
 my $sender_prefix = 'testuser+';
 my $sympa_default_domain = 'lists.example.com';
 my $mail_spool_dir = '/opt/sympa-dev/mail_spool';
+my $parser = MIME::Parser->new;
 
 sub extract_mail_body {
      my $mail_content = shift;
@@ -28,6 +29,8 @@ Given qr/outgoing mail is based on template "(\S+)" for list "(\S+)"/, sub {
      ## Parse mail template
      my $tt = Template->new(INCLUDE_PATH => ['data/mail_templates']);
      $tt->process($1.'.eml.tt2', {sender_email => S->{'sender_email'}, recipient_email => $2}, \S->{'outgoing_mail'}) || die $tt->error;
+     
+     S->{'parsed_outgoing_mail'} = $parser->parse_data(S->{'outgoing_mail'});
 };
 
 When "I send outgoing mail", sub {
@@ -46,16 +49,19 @@ Then "sender should receive incoming mail", sub {
             S->{'incoming_mail'} .= $_;
         }
         close MAIL;
+        S->{'parsed_incoming_mail'} = $parser->parse_data(S->{'incoming_mail'});
+
      }else {
           fail("Incoming mail ".$mail_in_spool." not found in mail_spool/");
      }
 };
 
 Then "incoming mail body should match outgoing mail", sub {
-     my $parser = MIME::Parser->new;
-     my $parsed_outgoing_mail = $parser->parse_data(S->{'outgoing_mail'});
-     my $parsed_incoming_mail = $parser->parse_data(S->{'incoming_mail'});
-     ok($parsed_outgoing_mail->body_as_string eq $parsed_incoming_mail->body_as_string, "Mail bodies match");
+     ok(S->{'parsed_outgoing_mail'}->body_as_string eq S->{'parsed_incoming_mail'}->body_as_string, "Mail bodies match");
+};
+
+Then qr/incoming mail "(\S+)" header should include "(.+)"/, sub {
+     ok(S->{'parsed_incoming_mail'}->head->get($1) =~ /$2/, "Mail header $1 includes '$2'");
 };
 
 #Then qr/mail body in spool should be the same as mail template "(\S+)"/, sub {
