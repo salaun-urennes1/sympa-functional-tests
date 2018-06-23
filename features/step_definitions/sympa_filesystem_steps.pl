@@ -4,13 +4,10 @@ use strict;
 use warnings;
 
 use File::Copy::Recursive qw(fcopy rcopy dircopy fmove rmove dirmove);
-use IO::Socket::SSL qw();
-use WWW::Mechanize; 
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
 my $sympa_root_dir = "/usr/local/sympa";
-my $sympa_web_url = 'https://lists.example.com/sympa';
 
 Then qr/list "(\S+)" should( not)? have a config file/, sub {
      if ($2) {
@@ -35,13 +32,11 @@ Then qr/list "(\S+)" config file should contain "([^"]+)"/, sub {
      ok($config_content =~ /$2/m, "List $1 config contains $2" );
 };
 
-Then qr/list "(\S+)" homepage title should contain "([^"]+)"/, sub {
-     my $mech = WWW::Mechanize->new( ssl_opts => { verify_hostname => 0, SSL_verify_mode => IO::Socket::SSL::SSL_VERIFY_NONE } ) ;
-     $mech->get( $sympa_web_url.'/info/'.$1);
-
-     ok( $mech->title =~ /$2/);    
-};
-
+Given qr/family "(\S+)" is created/, sub {
+      -d "/opt/sympa-dev/data/$1" ||
+         do { fail("No directory for family $1"); return };
+      dircopy("/opt/sympa-dev/data/$1", $sympa_root_dir."/etc/families/$1");
+ };
 
  
  

@@ -9,8 +9,9 @@ my $mail_content;
 my $recipient;
 while (<STDIN>) {
     $mail_content .= $_;
-    if (/^Delivered-To: (.+)\@/) {
-        $recipient = $1;
+    ## Extract first Delivered-To header to determine recipient address 
+    if (/^Delivered-To: (.+)$/) {
+        $recipient ||= $1;
     }
     
 }
