@@ -12,8 +12,8 @@
     Given sender email is imported in list "testbasic"
     When I send outgoing mail
     When I wait 5 seconds
-    Then incoming mail should be in mail spool
-    #Then mail body in spool should be the same as mail template "basic_7bit"
+    Then sender should receive incoming mail
+    Then incoming mail body should match outgoing mail
     
        
 

@@ -6,6 +6,7 @@ use warnings;
 use Template;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
+use MIME::Parser;
 
 my $sympa_root_dir = "/usr/local/sympa";
 my $sender_prefix = 'testuser+';
@@ -37,7 +38,7 @@ When "I send outgoing mail", sub {
      do { fail("Failed send outgioing mail"); return } unless ($? == 0);
 };
 
-Then "incoming mail should be in mail spool", sub {
+Then "sender should receive incoming mail", sub {
      my $mail_in_spool = $mail_spool_dir.'/'.S->{'sender_email'}.'.eml';
      if (-f $mail_in_spool) {
         open MAIL, $mail_in_spool or die;
@@ -48,6 +49,13 @@ Then "incoming mail should be in mail spool", sub {
      }else {
           fail("Incoming mail ".$mail_in_spool." not found in mail_spool/");
      }
+};
+
+Then "incoming mail body should match outgoing mail", sub {
+     my $parser = MIME::Parser->new;
+     my $parsed_outgoing_mail = $parser->parse_data(S->{'outgoing_mail'});
+     my $parsed_incoming_mail = $parser->parse_data(S->{'incoming_mail'});
+     ok($parsed_outgoing_mail->body_as_string eq $parsed_incoming_mail->body_as_string, "Mail bodies match");
 };
 
 #Then qr/mail body in spool should be the same as mail template "(\S+)"/, sub {
