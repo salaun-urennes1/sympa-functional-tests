@@ -8,11 +8,12 @@
 
   Scenario: Send basic email to basic list
     Given list "testbasic" has a config file
-    Given sender is defined for mail template "basic_7bit" to list "testbasic"
-    Given sender is imported in list "testbasic"
-    When sender sends mail template "basic_7bit" to list "testbasic"
+    Given outgoing mail is based on template "basic_7bit" for list "testbasic"
+    Given sender email is imported in list "testbasic"
+    When I send outgoing mail
     When I wait 5 seconds
-    Then mail spool should contain sender mail
+    Then incoming mail should be in mail spool
+    #Then mail body in spool should be the same as mail template "basic_7bit"
     
        
 

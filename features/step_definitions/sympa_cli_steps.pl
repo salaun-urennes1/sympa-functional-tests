@@ -35,7 +35,7 @@ When qr/I close family "(\S+)*"/, sub {
       do { fail("Failed close family $1"); return } unless ($? == 0);     
 };
 
-Given qr/sender is imported in list "(\S+)*"/, sub {
+Given qr/sender email is imported in list "(\S+)*"/, sub {
      open CMD, "|$sympa_root_dir/bin/sympa.pl --import $1\@$sympa_default_domain" or die;
      printf CMD S->{'sender_email'}."\n";
      close CMD;
