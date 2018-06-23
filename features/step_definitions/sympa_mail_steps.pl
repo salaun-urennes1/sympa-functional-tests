@@ -61,6 +61,7 @@ Then "incoming mail body should match outgoing mail", sub {
 };
 
 Then qr/incoming mail "(\S+)" header should include "(.+)"/, sub {
+     printf "Subject : %s\n", S->{'parsed_incoming_mail'}->head->get($1);
      ok(S->{'parsed_incoming_mail'}->head->get($1) =~ /$2/, "Mail header $1 includes '$2'");
 };
 

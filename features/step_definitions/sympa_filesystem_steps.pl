@@ -32,9 +32,12 @@ Then qr/list "(\S+)" config file should contain "([^"]+)"/, sub {
      ok($config_content =~ /$2/m, "List $1 config contains $2" );
 };
 
-Given qr/family "(\S+)" is created/, sub {
+Given qr/family "(\S+)" is defined/, sub {
       -d "/opt/sympa-dev/data/$1" ||
          do { fail("No directory for family $1"); return };
+ };
+
+Given qr/family "(\S+)" is installed/, sub {
       dircopy("/opt/sympa-dev/data/$1", $sympa_root_dir."/etc/families/$1");
  };
 

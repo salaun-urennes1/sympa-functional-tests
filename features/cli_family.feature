@@ -2,12 +2,18 @@
  Feature: List family management
  
   Background:
+    Given family "testfamily" is installed
 
   Scenario: Instantiate list family
-    Given family "testfamily" is created
+    Given family "testfamily" is defined
     When I instantiate family "testfamily" with "initial_definition.xml"
     Then list "testlist1" should have a config file
     Then list "testlist1" homepage title should contain "This is my list"
+
+  Scenario: Modify list family
+    Given family "testfamily" is defined
+    When I modify list in family "testfamily" with "modifylist_definition.xml"
+    Then list "testlist1" homepage title should contain "New list subject"
        
   Scenario: Add list to family
     Given family "testfamily" is defined

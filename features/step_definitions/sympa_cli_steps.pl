@@ -20,6 +20,12 @@ When qr/I instantiate family "(\S+)*" with "(\S+)"/, sub {
       do { fail("Failed to instantiate family $1 with $2"); return } unless ($? == 0);
  };
 
+When qr/I modify list in family "(\S+)*" with "(\S+)"/, sub {
+      `$sympa_root_dir/bin/sympa.pl --modify_list $1 --input_file $sympa_root_dir/etc/families/$1/$2`;
+      #printf "$sympa_root_dir/bin/sympa.pl --modify_list $1 --input_file $sympa_root_dir/etc/families/$1/$2\n";
+      do { fail("Failed to modify family $1 with $2"); return } unless ($? == 0);
+ };
+
 When qr/I add list to family "(\S+)*" with "(\S+)"/, sub {
       `$sympa_root_dir/bin/sympa.pl --add_list $1 --input_file $sympa_root_dir/etc/families/$1/$2`;
       do { fail("Failed add_list to $1 with $2"); return } unless ($? == 0);

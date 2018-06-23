@@ -2,7 +2,7 @@
  Feature: Mail processing
  
   Background:
-    Given family "test_bundle_of_lists" is created
+    Given family "test_bundle_of_lists" is installed
     When I close family "test_bundle_of_lists"
     When I instantiate family "test_bundle_of_lists" with "initial_definition.xml"
 

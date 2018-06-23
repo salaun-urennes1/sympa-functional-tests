@@ -1,0 +1,14 @@
+   <list>
+    <listname>testlist1</listname>
+    <subject>New list subject</subject>
+    <owner multiple="1">
+      <email>first.owner@univ-rennes1.fr</email>
+    </owner>
+    <owner multiple="1">
+      <email>second.owner@univ-rennes1.fr</email>
+    </owner>
+    <owner multiple="1">
+      <email>third.owner@univ-rennes1.fr</email>
+    </owner>
+   </list>
+
