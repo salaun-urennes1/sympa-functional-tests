@@ -8,41 +8,22 @@ use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
 my $sympa_root_dir = "/usr/local/sympa";
+my $sender_prefix = 'testuser+';
+my $sympa_default_domain = '@lists.example.com';
 
-sub sendmail {
-     my %args = @_;
+Given qr/sender is defined for mail template "(\S+)" to list "(\S+)"/, sub {
+     ## Sender email is constructed with PID and time
+     S->{'sender_email'} = $sender_prefix.$1.'-'.$2.'-'.$$.'-'.time.$sympa_default_domain;
+};
+
+When qr/sender sends mail template "(\S+)" to list "(\S+)"/, sub {
+     open MAIL, '|/usr/sbin/sendmail -t' or die $!;
+
+     my $tt = Template->new(INCLUDE_PATH => ['data/mail_templates']);
+     $tt->process($1.'.eml.tt2', {sender_email => S->{'sender_email'}, recipient_email => $2}, \*MAIL) || die $tt->error;
+     close MAIL;
      
-     
-}
-
-Then qr/list "(\S+)" should( not)? have a config file/, sub {
-     if ($2) {
-          ok(not -f "$sympa_root_dir/list_data/$1/config", "List $1 does not exist" );
-     }else {
-          ok(-f "$sympa_root_dir/list_data/$1/config", "List $1 exists" );
-     }
-};
-
-Given qr/list "(\S+)" has a config file/, sub {
-     ok(-f $sympa_root_dir."/list_data/$1/config", "List $1 exists" );
-};
-
-Then qr/list "(\S+)" config file should contain "([^"]+)"/, sub {
-     open CONFIG, "$sympa_root_dir/list_data/$1/config" ||
-          do { fail("Failed to open config file for list $1"); return };
-     my $config_content;
-     while (<CONFIG>) {
-          $config_content .= $_;
-     }
-     close CONFIG;
-     ok($config_content =~ /$2/m, "List $1 config contains $2" );
-};
-
-Then qr/list "(\S+)" homepage title should contain "([^"]+)"/, sub {
-     my $mech = WWW::Mechanize->new( ssl_opts => { verify_hostname => 0, SSL_verify_mode => IO::Socket::SSL::SSL_VERIFY_NONE } ) ;
-     $mech->get( $sympa_web_url.'/info/'.$1);
-
-     ok( $mech->title =~ /$2/);    
+     do { fail("Failed send mail template $1 to list $2"); return } unless ($? == 0);
 };
 
 

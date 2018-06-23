@@ -1,6 +1,6 @@
 Date: Sat, 23 Jun 2018 07:32:57 +0200 (CEST)
-From: {% sender_gecos %} <{% sender_email %}>
-To: {% recipient_gecos %} <{% recipient_email %}>
+From: [% sender_email %]
+To: [% recipient_email %]
 Subject: Basic subject
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8

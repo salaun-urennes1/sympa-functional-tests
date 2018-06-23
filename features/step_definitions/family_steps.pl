@@ -9,6 +9,7 @@
  use Test::BDD::Cucumber::StepFile;
 
 my $sympa_root_dir = "/usr/local/sympa";
+my $sympa_default_domain = '@lists.example.com';
 
  Given qr/family "(\S+)" is created/, sub {
       -d "/opt/sympa-dev/data/$1" ||
@@ -34,4 +35,11 @@ my $sympa_root_dir = "/usr/local/sympa";
 When qr/I close list "(\S+)*"/, sub {
       `$sympa_root_dir/bin/sympa.pl --close_list $1`;
       do { fail("Failed close list $1"); return } unless ($? == 0);     
+};
+
+Given qr/sender is imported in list "(\S+)*"/, sub {
+     open CMD, "|$sympa_root_dir/bin/sympa.pl --import $1\@$sympa_default_domain" or die;
+     printf CMD S->{'sender_email'}."\n";
+     close CMD;
+     do { fail("Failed importing user ".S->{'sender_email'}." in list $1"); return } unless ($? == 0);  
 };

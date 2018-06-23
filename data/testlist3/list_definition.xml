@@ -1,9 +1,8 @@
- <family> 
    <list>
-    <listname>testbasic</listname>
-    <subject>This list has a basic config</subject>
-    <visibility>noconceal</visibility>
-    <review>public</review>
+    <listname>testlist3</listname>
+    <type>discussion_list</type>
+    <topics>dummy</topics>
+    <subject>This is my list</subject>
     <owner multiple="1">
       <email>first.owner@univ-rennes1.fr</email>
     </owner>
@@ -11,5 +10,4 @@
       <email>second.owner@univ-rennes1.fr</email>
     </owner>
    </list>
-</family>
 

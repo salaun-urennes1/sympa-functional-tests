@@ -1,8 +1,16 @@
-subject [% sujet %]
+subject [% subject %]
 
 [% FOREACH o = owner -%]
 owner
 email [% o.email %]
+
+[% IF visibility %]
+visibility [% visibility %]
+[% END %]
+
+[% IF review %]
+review [% review %]
+[% END %]
 
 [% END -%]
 
