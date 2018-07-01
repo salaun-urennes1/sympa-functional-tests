@@ -1,6 +1,6 @@
    <list>
     <listname>testlist2</listname>
-    <sujet>This is my list</sujet>
+    <subject>This is my list</subject>
     <owner multiple="1">
       <email>first.owner@univ-rennes1.fr</email>
     </owner>
