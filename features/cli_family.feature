@@ -6,8 +6,7 @@
 
   Scenario: Instantiate list family
     Given family "testfamily" is defined
-    When I close family "testfamily"
-     And I instantiate family "testfamily" with "initial_definition.xml"
+    When I instantiate family "testfamily" with "initial_definition.xml"
     Then list "testlist1" should have a config file
      And list "testlist1" homepage title should contain "This is my list"
 
@@ -18,6 +17,7 @@
        
   Scenario: Add list to family
     Given family "testfamily" is defined
+      And I remove list "testlist2" existing directory
     When I add list to family "testfamily" with "addlist_definition.xml"
     Then list "testlist2" should have a config file
      And list "testlist2" homepage title should contain "This is my list"

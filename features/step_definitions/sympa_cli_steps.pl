@@ -16,7 +16,7 @@ Given qr/family "(\S+)" is defined/, sub {
  };
  
 When qr/I instantiate family "(\S+)*" with "(\S+)"/, sub {
-      `$sympa_root_dir/bin/sympa.pl --instantiate_family $1 --input_file $sympa_root_dir/etc/families/$1/$2`;
+      `$sympa_root_dir/bin/sympa.pl --instantiate_family $1 --close_unknown --input_file $sympa_root_dir/etc/families/$1/$2`;
       do { fail("Failed to instantiate family $1 with $2"); return } unless ($? == 0);
  };
 
@@ -27,6 +27,7 @@ When qr/I modify list in family "(\S+)*" with "(\S+)"/, sub {
  };
 
 When qr/I add list to family "(\S+)*" with "(\S+)"/, sub {
+      printf "$sympa_root_dir/bin/sympa.pl --add_list $1 --input_file $sympa_root_dir/etc/families/$1/$2\n";
       `$sympa_root_dir/bin/sympa.pl --add_list $1 --input_file $sympa_root_dir/etc/families/$1/$2`;
       do { fail("Failed add_list to $1 with $2"); return } unless ($? == 0);
  };
@@ -37,7 +38,8 @@ When qr/I close list "(\S+)*"/, sub {
 };
 
 When qr/I close family "(\S+)*"/, sub {
-      `$sympa_root_dir/bin/sympa.pl --close_family $1 --robot $sympa_default_domain`;
+      printf "$sympa_root_dir/bin/sympa.pl --close_family $1 --robot $sympa_default_domain\n";
+      `$sympa_root_dir/bin/sympa.pl --close_family $1 --close_unknown --robot $sympa_default_domain`;
       do { fail("Failed close family $1"); return } unless ($? == 0);     
 };
 

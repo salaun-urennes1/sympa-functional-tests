@@ -41,5 +41,14 @@ Given qr/family "(\S+)" is installed/, sub {
       dircopy("/opt/sympa-dev/data/$1", $sympa_root_dir."/etc/families/$1");
  };
 
+Given qr/I remove list "(\S+)" existing directory/, sub {
+     my $list_dir = $sympa_root_dir.'/list_data/'.$1;
+     if (-d $list_dir)  {
+        `rm -Rf $list_dir`;
+        do { fail("Failed to remove dir $list_dir"); return } unless ($? == 0);
+     }
+     
+};
+
  
  
