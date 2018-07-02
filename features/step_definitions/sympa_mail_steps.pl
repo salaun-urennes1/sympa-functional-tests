@@ -13,6 +13,8 @@ my $sender_prefix = 'testuser+';
 my $sympa_default_domain = 'lists.example.com';
 my $mail_spool_dir = '/opt/sympa-dev/mail_spool';
 my $parser = MIME::Parser->new;
+$parser->output_to_core(1);
+$parser->tmp_dir('/tmp');
 
 sub extract_mail_body {
      my $mail_content = shift;
@@ -65,14 +67,5 @@ Then qr/incoming mail "(\S+)" header should include "(.+)"/, sub {
      ok(S->{'parsed_incoming_mail'}->head->get($1) =~ /$2/, "Mail header $1 includes '$2'");
 };
 
-#Then qr/mail body in spool should be the same as mail template "(\S+)"/, sub {
-#     my $mail_in_spool = $mail_spool_dir.'/'.S->{'sender_email'}.'.eml';
-#     open MAIL, $mail_in_spool;
-#     my $mail_in_spool_content;
-#     foreach (<MAIL>) {
-#          $mail_in_spool_content .= $_;
-#     }
-#     close MAIL;
-#     print extract_mail_body($mail_in_spool_content);
-#};
+
  
