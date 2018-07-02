@@ -10,6 +10,10 @@ When qr/I wait (\d+) seconds/, sub {
      sleep $1;
 };
 
+Then qr/I wait (\d+) seconds/, sub {
+     sleep $1;
+};
+
 
 
  
