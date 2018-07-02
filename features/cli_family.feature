@@ -6,7 +6,8 @@
 
   Scenario: Instantiate list family
     Given family "testfamily" is defined
-    When I instantiate family "testfamily" with "initial_definition.xml"
+    When I close family "testfamily"
+     And I instantiate family "testfamily" with "initial_definition.xml"
     Then list "testlist1" should have a config file
      And list "testlist1" homepage title should contain "This is my list"
 
