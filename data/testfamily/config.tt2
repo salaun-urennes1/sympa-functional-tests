@@ -3,6 +3,7 @@ subject [% subject %]
 [% FOREACH o = owner -%]
 owner
 email [% o.email %]
+profile privileged
 
 [% END -%]
 

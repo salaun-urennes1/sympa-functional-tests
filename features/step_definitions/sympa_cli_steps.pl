@@ -16,6 +16,7 @@ Given qr/family "(\S+)" is defined/, sub {
  };
  
 When qr/I instantiate family "(\S+)*" with "(\S+)"/, sub {
+      print "$sympa_root_dir/bin/sympa.pl --instantiate_family $1 --close_unknown --input_file $sympa_root_dir/etc/families/$1/$2\n";
       `$sympa_root_dir/bin/sympa.pl --instantiate_family $1 --close_unknown --input_file $sympa_root_dir/etc/families/$1/$2`;
       do { fail("Failed to instantiate family $1 with $2"); return } unless ($? == 0);
  };
