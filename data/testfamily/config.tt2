@@ -5,5 +5,8 @@ owner
 email [% o.email %]
 profile privileged
 
+[% IF send %]
+send [% send %]
+[% END %]
 [% END -%]
 

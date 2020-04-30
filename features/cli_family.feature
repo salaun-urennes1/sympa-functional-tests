@@ -22,6 +22,12 @@
     Then list "testlist2" should have a config file
      And list "testlist2" homepage title should contain "This is my list"
 
+  Scenario: Add list with constraint error
+    Given family "testfamily" is defined
+      And I remove list "testlist3" existing directory
+    When I add list to family "testfamily" with "addlist_constraint_error_definition.xml"
+    Then command should fail
+
   Scenario: Close list from family
     Given family "testfamily" is defined
      And list "testlist2" has a config file

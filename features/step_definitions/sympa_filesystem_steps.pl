@@ -32,6 +32,10 @@ Then qr/list "(\S+)" config file should contain "([^"]+)"/, sub {
      ok($config_content =~ /$2/m, "List $1 config contains $2" );
 };
 
+Then qr/command should fail/, sub {
+      do { fail("Command succeeded with status ".S->{'last_cmd_status'}); return } if (S->{'last_cmd_status'} == 0);
+};
+
 Given qr/family "(\S+)" is defined/, sub {
       -d "/opt/sympa-dev/data/$1" ||
          do { fail("No directory for family $1"); return };
