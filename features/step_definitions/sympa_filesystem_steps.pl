@@ -22,6 +22,7 @@ Given qr/list "(\S+)" has a config file/, sub {
 };
 
 Then qr/list "(\S+)" config file should contain "([^"]+)"/, sub {
+     my ($listname, $content) = ($1, $2); 
      open CONFIG, "$sympa_root_dir/list_data/$1/config" ||
           do { fail("Failed to open config file for list $1"); return };
      my $config_content;
@@ -29,7 +30,7 @@ Then qr/list "(\S+)" config file should contain "([^"]+)"/, sub {
           $config_content .= $_;
      }
      close CONFIG;
-     ok($config_content =~ /$2/m, "List $1 config contains $2" );
+     ok($config_content =~ /$2/m, "List $listname config contains $content" );
 };
 
 Then qr/command should fail/, sub {
