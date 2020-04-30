@@ -1,0 +1,14 @@
+ <family> 
+   <list>
+    <listname>testlist1</listname>
+    <subject>This is my list</subject>
+    <send>public</send>
+    <owner multiple="1">
+      <email>first.owner@univ-rennes1.fr</email>
+    </owner>
+    <owner multiple="1">
+      <email>second.owner@univ-rennes1.fr</email>
+    </owner>
+   </list>
+</family>
+
